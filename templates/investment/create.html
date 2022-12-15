@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<h1>Investments Page</h1>
+{% crispy form %}
+
+<div class="mt-2">
+  <table id="investment_table" class="table table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th class="text-center">Category</th>
+        <th class="text-center">Profit Rate</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Start Date</th>
+        <th class="text-center">End Date</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for investment in investments %}
+      <tr>
+        <td class="text-center">{{investment.category}}</td>
+        <td class="text-center">{{investment.profit_rate}}</td>
+        <td class="text-center">{{investment.amount}}</td>
+        <td class="text-center">{{investment.start_date}}</td>
+        <td class="text-center">{{investment.end_date}}</td>
+        <td class="text-center">
+          <a class="btn btn-primary" href="investment/edit/{{investment.id}}">Edit</a>
+          <a class="btn btn-danger" href="investment/delete/{{investment.id}}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{% static 'jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dataTables.bootstrap5.min.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    $('#investment_table').DataTable();
+  });
+</script>
+{% endblock %}
+
+{% block customCSS %}
+<style>
+  #investment_table_filter input{
+    border: 1px solid #ced4da;
+  }
+</style>
+{% endblock %}

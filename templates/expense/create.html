@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<h1>Expense Page</h1>
+{% crispy form %}
+
+<div class="mt-2">
+  <table id="expense_table" class="table table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th class="text-center">Category</th>
+        <th class="text-center">Period</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Payment Start Date</th>
+        <th class="text-center">Payment End Date</th>
+        <th class="text-center">Note</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for expense in expenses %}
+      <tr>
+        <td class="text-center">{{expense.category}}</td>
+        <td class="text-center">{{expense.period}}</td>
+        <td class="text-center">{{expense.amount}}</td>
+        <td class="text-center">{{expense.payment_start_date}}</td>
+        <td class="text-center">{{expense.payment_end_date}}</td>
+        <td class="text-center">{{expense.note}}</td>
+        <td class="text-center">
+          <a class="btn btn-primary" href="expense/edit/{{expense.id}}">Edit</a>
+          <a class="btn btn-danger" href="expense/delete/{{expense.id}}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{% static 'jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dataTables.bootstrap5.min.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    $("#div_id_debt").hide();
+    $("#id_category").change(function(){
+      if($(this).val()=="Debt") {
+        $("#div_id_period").hide();
+        $("#div_id_debt").show();
+      } else {
+        $("#div_id_period").show();
+        $("#div_id_debt").hide();
+      }
+    });
+    $('#expense_table').DataTable();
+  });
+</script>
+{% endblock %}
+
+{% block customCSS %}
+<style>
+  #expense_table_filter input{
+    border: 1px solid #ced4da;
+  }
+</style>
+{% endblock %}

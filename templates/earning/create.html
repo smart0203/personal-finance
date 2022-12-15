@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<h1>Earning Page</h1>
+{% crispy form %}
+
+<div class="mt-2">
+  <table id="earning_table" class="table table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th class="text-center">Period</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Payment Start Date</th>
+        <th class="text-center">Payment End Date</th>
+        <th class="text-center">Note</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for earning in earnings %}
+      <tr>
+        <td class="text-center">{{earning.period}}</td>
+        <td class="text-center">{{earning.amount}}</td>
+        <td class="text-center">{{earning.payment_start_date}}</td>
+        <td class="text-center">{{earning.payment_end_date}}</td>
+        <td class="text-center">{{earning.note}}</td>
+        <td class="text-center">
+          <a class="btn btn-primary" href="earning/edit/{{earning.id}}">Edit</a>
+          <a class="btn btn-danger" href="earning/delete/{{earning.id}}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{% static 'jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dataTables.bootstrap5.min.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    $("#div_id_investment").hide();
+    $("#id_category").change(function(){
+      if($(this).val()=="Investment") {
+        $("#div_id_period").hide();
+        $("#div_id_investment").show();
+      } else {
+        $("#div_id_period").show();
+        $("#div_id_investment").hide();
+      }
+    });
+    $('#earning_table').DataTable();
+  });
+</script>
+{% endblock %}
+
+{% block customCSS %}
+<style>
+  #earning_table_filter input{
+    border: 1px solid #ced4da;
+  }
+</style>
+{% endblock %}

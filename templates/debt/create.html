@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<h1>Debt Management Page</h1>
+{% crispy form %}
+
+<div class="mt-2">
+  <table id="debt_table" class="table table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th class="text-center">Category</th>
+        <th class="text-center">Interest Rate</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Start Date</th>
+        <th class="text-center">End Date</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for debt in debts %}
+      <tr>
+        <td class="text-center">{{debt.category}}</td>
+        <td class="text-center">{{debt.interest_rate}}</td>
+        <td class="text-center">{{debt.amount}}</td>
+        <td class="text-center">{{debt.start_date}}</td>
+        <td class="text-center">{{debt.end_date}}</td>
+        <td class="text-center">
+          <a class="btn btn-primary" href="debt/edit/{{debt.id}}">Edit</a>
+          <a class="btn btn-danger" href="debt/delete/{{debt.id}}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{% static 'jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dataTables.bootstrap5.min.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    $('#debt_table').DataTable();
+  });
+</script>
+{% endblock %}
+
+{% block customCSS %}
+<style>
+  #debt_table_filter input{
+    border: 1px solid #ced4da;
+  }
+</style>
+{% endblock %}

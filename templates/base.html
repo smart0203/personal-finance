@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dataTables.bootstrap5.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/custom.css' %}">
+    {% block customCSS %}
+    {% endblock %}
+    <meta name="robots" content="noindex, follow">
+</head>
+<body>
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div class="img bg-wrap text-center py-4">
+        <div class="user-logo">
+          <h3>Personal Financial Management</h3>
+        </div>
+      </div>
+      <ul class="list-unstyled components mb-5">
+        <li>
+          <a href="{% url 'management:dashboard' %}"> Dashboard</a>
+        </li>
+        <li>
+          <a href="{% url 'management:earnings' %}"> Earnings</a>
+        </li>
+        <li>
+          <a href="{% url 'management:expenses' %}"> Expenses</a>
+        </li>
+        <li>
+          <a href="{% url 'management:debt' %}"> Debt Management</a>
+        </li>
+        <li>
+          <a href="{% url 'management:investment' %}"> Investments</a>
+        </li>
+        <li>
+          <a href="{% url 'account_logout' %}"> Sign Out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <script src="{% static 'bootstrap.min.js' %}"></script>
+  
+  {% block customJS %}
+  {% endblock %}
+</body>
+</html>
